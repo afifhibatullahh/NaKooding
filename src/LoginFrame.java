@@ -150,7 +150,7 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_customer_80px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_customer_80px_2.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -295,6 +295,10 @@ public class LoginFrame extends javax.swing.JFrame {
             Menu menu = new Menu();
             menu.setVisible(true);
             this.dispose();
+        }else if(eMail.equals("admin") && password.equals("admin")){
+            adminFrame admin = new adminFrame();
+            admin.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_loginButtonMouseClicked
 
@@ -307,6 +311,10 @@ public class LoginFrame extends javax.swing.JFrame {
             if(eMail.equals("demo") && password.equals("password")){
                 Menu menu = new Menu();
                 menu.setVisible(true);
+                this.dispose();
+            }else if(eMail.equals("admin") && password.equals("admin")){
+                adminFrame admin = new adminFrame();
+                admin.setVisible(true);
                 this.dispose();
             }
         }
