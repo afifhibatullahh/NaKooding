@@ -212,18 +212,18 @@ public class RegisFrame extends javax.swing.JFrame {
         });
 
         usernameError.setBackground(new java.awt.Color(255, 255, 255));
-        usernameError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        usernameError.setForeground(new java.awt.Color(153, 0, 51));
+        usernameError.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        usernameError.setForeground(new java.awt.Color(0, 51, 153));
         usernameError.setText(" ");
 
         nameError.setBackground(new java.awt.Color(255, 255, 255));
-        nameError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        nameError.setForeground(new java.awt.Color(153, 0, 51));
+        nameError.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        nameError.setForeground(new java.awt.Color(0, 51, 153));
         nameError.setText(" ");
 
         emailError.setBackground(new java.awt.Color(255, 255, 255));
-        emailError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        emailError.setForeground(new java.awt.Color(153, 0, 51));
+        emailError.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        emailError.setForeground(new java.awt.Color(0, 51, 153));
         emailError.setText(" ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -266,10 +266,10 @@ public class RegisFrame extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(usernameError, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(nameError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(usernameError, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(nameError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emailError, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(emailError, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -372,7 +372,7 @@ public class RegisFrame extends javax.swing.JFrame {
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -470,7 +470,7 @@ public class RegisFrame extends javax.swing.JFrame {
                 checkFirst = false;
             }
             else if(firstName.getText().matches(PATTERN)){
-                nameError.setText("bener");
+                nameError.setText("");
                 checkFirst = true;
             }else{
                 nameError.setText("Nama tidak valid");
@@ -486,7 +486,7 @@ public class RegisFrame extends javax.swing.JFrame {
                 checkLast = false;
             }
             else if(lastName.getText().matches(PATTERN)){
-                nameError.setText("bener");
+                nameError.setText("");
                 checkLast = true;
             }else{
                 nameError.setText("Nama tidak valid");
@@ -505,11 +505,11 @@ public class RegisFrame extends javax.swing.JFrame {
         else if(unameField.getText().matches(PATTERN)&& !unameField.getText().contains(" ")){
            usernameError.setText("");
            checkUname = true;
-           if(checkUname(unameField.getText()) && !unameField.getText().isEmpty() && !lastName.getText().isEmpty()){
+           if(checkUname(unameField.getText())){
                usernameError.setText("Username telah digunakan");
                checkUname = false;
            }else {
-               usernameError.setText("bener");
+               usernameError.setText("");
                checkUname = true;
            }
         }else{
@@ -532,10 +532,10 @@ public class RegisFrame extends javax.swing.JFrame {
                 checkEmail = false;
             }else{
                 checkEmail = true;
-                emailError.setText("bener");
+                emailError.setText("");
             }
         }else{
-            emailError.setText("Email tidak valid");
+            emailError.setText("Email belum valid");
             checkEmail = false;
         }
     }//GEN-LAST:event_emailFieldKeyReleased
@@ -565,14 +565,14 @@ public class RegisFrame extends javax.swing.JFrame {
                 java.sql.Connection conn = (Connection)connectionDB.ConnectDb();
                 java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
                 pstm.execute();
-                JOptionPane.showMessageDialog(null, "Registrasi Berhasil");
+                JOptionPane.showMessageDialog(null, "Registerasi Berhasil");
                 kosongkan_data();
 
             }catch(HeadlessException | SQLException e){
-                JOptionPane.showMessageDialog(this, " Maaf nih, data yang kamu masukan ada yang ga sesuai, coba cek lagi ya ");
+                JOptionPane.showMessageDialog(this, "Maaf, data yang kamu masukan tidak sesuai, mohon di cek lagi");
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Masih ada data yang tidak valid nih, Yuk di cek lagi");
+            JOptionPane.showMessageDialog(null, "Maaf, ada data yang tidak valid");
 //            
             
         }

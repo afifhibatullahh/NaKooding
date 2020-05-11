@@ -1,5 +1,10 @@
 
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -38,7 +43,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jPanel1 = new javax.swing.JPanel();
-        eMailLogin = new javax.swing.JTextField();
+        userLogin = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -65,16 +70,16 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        eMailLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        eMailLogin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 2, 0, new java.awt.Color(0, 51, 153)));
-        eMailLogin.addActionListener(new java.awt.event.ActionListener() {
+        userLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        userLogin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 2, 0, new java.awt.Color(0, 51, 153)));
+        userLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eMailLoginActionPerformed(evt);
+                userLoginActionPerformed(evt);
             }
         });
-        eMailLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+        userLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                eMailLoginKeyPressed(evt);
+                userLoginKeyPressed(evt);
             }
         });
 
@@ -86,7 +91,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel6.setText("E-mail");
+        jLabel6.setText("Username");
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -169,19 +174,19 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(eMailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                        .addComponent(userLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(38, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(passwordLogin, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kGradientPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel13))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(passwordLogin, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(kGradientPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel13))
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -194,12 +199,12 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eMailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(userLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(kGradientPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,57 +287,83 @@ public class LoginFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void eMailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eMailLoginActionPerformed
+    private void userLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_eMailLoginActionPerformed
+    }//GEN-LAST:event_userLoginActionPerformed
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         // TODO add your handling code here:
-        String eMail = eMailLogin.getText();
+        String eMail = userLogin.getText();
         String password = passwordLogin.getText();
 
-        if(eMail.equals("demo") && password.equals("password")){
-            Menu menu = new Menu();
-            menu.setVisible(true);
-            this.dispose();
-        }else if(eMail.equals("admin") && password.equals("admin")){
+        if(eMail.equals("admin") && password.equals("admin")){
             adminFrame admin = new adminFrame();
             admin.setVisible(true);
             this.dispose();
+        }else{
+            login();
         }
     }//GEN-LAST:event_loginButtonMouseClicked
+    private void login(){
+        PreparedStatement ps;
+        ResultSet rs; 
+         String uname = userLogin.getText();
+        String upass = passwordLogin.getText();
+        String query = "SELECT * FROM account WHERE username =? AND password =?";
+        
+        try {
+            ps = connectionDB.ConnectDb().prepareStatement(query);
+            
+            ps.setString(1, uname);
+           
+            ps.setString(2, upass);
+            
+            rs = ps.executeQuery(); 
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Login berhasil");
 
+                new Menu(rs.getString("first_name"),rs.getString("last_name"), rs.getString("email")).setVisible(true); //Pemanggilan layer HomePage dan SetText 
+                this.dispose();
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Username atau Password salah");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void passwordLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordLoginKeyPressed
         // TODO add your handling code here:
+        String uname = userLogin.getText();
+        String upass = passwordLogin.getText();
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            String eMail = eMailLogin.getText();
-            String password = passwordLogin.getText();
-
-            if(eMail.equals("demo") && password.equals("password")){
-                Menu menu = new Menu();
-                menu.setVisible(true);
-                this.dispose();
-            }else if(eMail.equals("admin") && password.equals("admin")){
+           if(uname.equals("admin") && upass.equals("admin")){
                 adminFrame admin = new adminFrame();
                 admin.setVisible(true);
                 this.dispose();
+            }else{
+                 login();
             }
-        }
+         }
     }//GEN-LAST:event_passwordLoginKeyPressed
 
-    private void eMailLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_eMailLoginKeyPressed
+    private void userLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userLoginKeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            String eMail = eMailLogin.getText();
+            String eMail = userLogin.getText();
             String password = passwordLogin.getText();
 
             if(eMail.equals("demo") && password.equals("password")){
                 Menu menu = new Menu();
                 menu.setVisible(true);
                 this.dispose();
+            }else{
+                login();
             }
         }
-    }//GEN-LAST:event_eMailLoginKeyPressed
+    }//GEN-LAST:event_userLoginKeyPressed
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
         // TODO add your handling code here:
@@ -385,7 +416,6 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField eMailLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -401,5 +431,6 @@ public class LoginFrame extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel6;
     private javax.swing.JLabel loginButton;
     private javax.swing.JPasswordField passwordLogin;
+    private javax.swing.JTextField userLogin;
     // End of variables declaration//GEN-END:variables
 }
