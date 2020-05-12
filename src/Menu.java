@@ -1,5 +1,13 @@
 
 import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -25,13 +33,24 @@ public class Menu extends javax.swing.JFrame {
         setVisible(true);
         setResizable(false);
     }
+    private String uname;
+    private String passw;
+    String firstname;
+    String lastname;
+    String email;
     
-    public Menu(String view,String view2, String email) {
+    public Menu(String view,String view2,String uname, String email,String pass) {
         initComponents();
             String fullName = view + " " + view2;
             username.setText(fullName); //SetText Hi dari kelas Login
             username1.setText(fullName);
             setEmail.setText(email);
+            this.uname = uname;
+            this.passw = pass;
+            this.firstname=view;
+            this.lastname=view2;
+            this.email = email;
+            
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -132,6 +151,8 @@ public class Menu extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
+        REFRESH = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -241,7 +262,7 @@ public class Menu extends javax.swing.JFrame {
 
         username1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         username1.setForeground(new java.awt.Color(91, 91, 91));
-        username1.setText(" ");
+        username1.setText("Administrator!");
         username1.setIconTextGap(11);
 
         welcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1003,6 +1024,21 @@ public class Menu extends javax.swing.JFrame {
         jSeparator5.setBackground(new java.awt.Color(153, 153, 153));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        REFRESH.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        REFRESH.setForeground(new java.awt.Color(91, 91, 91));
+        REFRESH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_refresh_32px.png"))); // NOI18N
+        REFRESH.setText("REFRESH");
+        REFRESH.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        REFRESH.setIconTextGap(11);
+        REFRESH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                REFRESHMouseClicked(evt);
+            }
+        });
+
+        jSeparator7.setBackground(new java.awt.Color(153, 153, 153));
+        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1015,10 +1051,14 @@ public class Menu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(toCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(toAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
+                .addComponent(REFRESH, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(toHelp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1035,18 +1075,21 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(jSeparator1)
             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator4)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addComponent(jSeparator5)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(toAbout)
+                        .addComponent(REFRESH))
                     .addComponent(toSettings)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(toHome)
-                        .addComponent(toAbout)
                         .addComponent(toHelp))
                     .addComponent(toCourse)
                     .addComponent(logout))
                 .addContainerGap(15, Short.MAX_VALUE))
-            .addComponent(jSeparator5)
+            .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
@@ -1121,7 +1164,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void toSettingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toSettingsMouseClicked
         // TODO add your handling code here:
-        Settings s = new Settings();
+        Settings s = new Settings(uname,passw,email,firstname,lastname);
         s.setVisible(true);
     }//GEN-LAST:event_toSettingsMouseClicked
 
@@ -1207,6 +1250,34 @@ public class Menu extends javax.swing.JFrame {
         jPanel2.revalidate();
     }//GEN-LAST:event_toCourse4MouseClicked
 
+    private void REFRESHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_REFRESHMouseClicked
+        // TODO add your handling code here:
+      PreparedStatement ps;
+        ResultSet res;
+        String query = "SELECT * FROM account WHERE username =?";
+        
+        try {
+            ps = connectionDB.ConnectDb().prepareStatement(query);
+            
+            ps.setString(1, uname);
+            
+            res = ps.executeQuery(); 
+            
+            if(res.next()){
+
+               new Menu(res.getString("first_name"),res.getString("last_name"),res.getString("username"), res.getString("email"), res.getString("password")).setVisible(true); //Pemanggilan layer HomePage dan SetText 
+               this.dispose();
+
+            }else{
+                JOptionPane.showMessageDialog(null, "Mohon maaf sedang terjadi kesalahan pada sistem kami");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+    }//GEN-LAST:event_REFRESHMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1243,6 +1314,7 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel REFRESH;
     private javax.swing.JPanel course1;
     private javax.swing.JPanel course2;
     private javax.swing.JPanel course3;
@@ -1316,6 +1388,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private keeptoo.KGradientPanel kGradientPanel1;
     private javax.swing.JLabel logout;
     private javax.swing.JPanel mainPanel;

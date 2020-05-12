@@ -323,7 +323,7 @@ public class LoginFrame extends javax.swing.JFrame {
             if(rs.next()){
                 JOptionPane.showMessageDialog(null, "Login berhasil");
 
-                new Menu(rs.getString("first_name"),rs.getString("last_name"), rs.getString("email")).setVisible(true); //Pemanggilan layer HomePage dan SetText 
+                new Menu(rs.getString("first_name"),rs.getString("last_name"),rs.getString("username") ,rs.getString("email"),upass).setVisible(true); //Pemanggilan layer HomePage dan SetText 
                 this.dispose();
 
             }else{
