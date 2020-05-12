@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2020 at 02:33 PM
+-- Generation Time: May 12, 2020 at 08:21 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -41,7 +41,15 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`first_name`, `last_name`, `username`, `email`, `password`) VALUES
-('afif', 'hibatullah', 'afifhi', 'afifhibatullah@gmail.com', 'password');
+('afif', 'hibatullah', 'afifhi', 'afifhibatullah@gmail.com,', 'apip'),
+('Rocky', 'Balboa', 'balboarocky', 'rockbal@punch.out', 'punchpunch'),
+('Bambang', 'Pamungkas', 'bambang', 'bambangp@yahoo.com', 'mbambang'),
+('Elon', 'Musk', 'elonlonadsf', 'elonMusk@rocket.rock,,', 'password'),
+('Geralt', 'ofRivia', 'Geralt', 'theWitcher@gmail.com', 'Awwsafsdaf'),
+('Ragnar', 'Lothbrok', 'ragnar', 'vikings27@student.world,,,', 'ragnarok'),
+('Roronoa', 'Zoro', 'roronoa', 'zoro@gmail.com,,', 'password'),
+('Sarah', 'Marshall', 'sarah', 'sarah2132@harvard.uk', 'gead@jkdfaj'),
+('bear', 'ted', 'teddybear', 'bear@yahoo.com', 'password');
 
 --
 -- Indexes for dumped tables
