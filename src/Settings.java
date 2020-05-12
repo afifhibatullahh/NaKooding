@@ -144,7 +144,7 @@ public class Settings extends javax.swing.JFrame {
         jLabel5.setIconTextGap(11);
 
         fname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        fname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
+        fname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 2, 2, 1, new java.awt.Color(0, 51, 153)));
         fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fnameActionPerformed(evt);
@@ -157,7 +157,7 @@ public class Settings extends javax.swing.JFrame {
         });
 
         lname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
+        lname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 2, 2, 1, new java.awt.Color(0, 51, 153)));
         lname.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 lnameKeyReleased(evt);
@@ -170,7 +170,7 @@ public class Settings extends javax.swing.JFrame {
         jLabel6.setIconTextGap(11);
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
+        email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 2, 2, 1, new java.awt.Color(0, 51, 153)));
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
