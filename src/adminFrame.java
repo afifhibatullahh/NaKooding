@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,9 @@ public class adminFrame extends javax.swing.JFrame {
      */
     public adminFrame() {
         initComponents();
+        setExtendedState(JFrame.MAXIMIZED_HORIZ);
+        setVisible(true);
+        setResizable(false);
         table_data.setBackground(new Color(0,0,0,0));
         ((DefaultTableCellRenderer)table_data.getDefaultRenderer(Object.class)).setBackground(new Color(0,0,0,0));
          
@@ -85,7 +89,6 @@ public class adminFrame extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         kGradientPanel1.setkEndColor(new java.awt.Color(0, 59, 103));
         kGradientPanel1.setkStartColor(new java.awt.Color(0, 204, 255));

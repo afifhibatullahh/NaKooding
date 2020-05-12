@@ -156,7 +156,6 @@ public class Menu extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(1080, 720));
 
         kGradientPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1152,7 +1151,7 @@ public class Menu extends javax.swing.JFrame {
             .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setSize(new java.awt.Dimension(1207, 726));
+        setSize(new java.awt.Dimension(1223, 765));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

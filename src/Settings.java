@@ -1,8 +1,12 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -51,7 +55,7 @@ public class Settings extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         mainSetting = new javax.swing.JPanel();
         accountSetting = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        fnError = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
         lname = new javax.swing.JTextField();
@@ -61,13 +65,16 @@ public class Settings extends javax.swing.JFrame {
         reset = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        currentPass = new javax.swing.JTextField();
-        newPass = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        renewPass = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         save = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lnError = new javax.swing.JLabel();
+        emailError = new javax.swing.JLabel();
+        currentPass = new javax.swing.JPasswordField();
+        newPass = new javax.swing.JPasswordField();
+        renewPass = new javax.swing.JPasswordField();
         reportPanel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -78,7 +85,6 @@ public class Settings extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         toAccount = new javax.swing.JLabel();
         toReport = new javax.swing.JLabel();
-        back = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -127,10 +133,10 @@ public class Settings extends javax.swing.JFrame {
 
         accountSetting.setBackground(new java.awt.Color(0, 79, 124));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel4.setText("First Name");
-        jLabel4.setIconTextGap(11);
+        fnError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        fnError.setForeground(new java.awt.Color(240, 240, 240));
+        fnError.setText("  ");
+        fnError.setIconTextGap(11);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(240, 240, 240));
@@ -144,12 +150,17 @@ public class Settings extends javax.swing.JFrame {
                 fnameActionPerformed(evt);
             }
         });
+        fname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fnameKeyReleased(evt);
+            }
+        });
 
         lname.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
-        lname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lnameActionPerformed(evt);
+        lname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                lnameKeyReleased(evt);
             }
         });
 
@@ -163,6 +174,11 @@ public class Settings extends javax.swing.JFrame {
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailActionPerformed(evt);
+            }
+        });
+        email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailKeyReleased(evt);
             }
         });
 
@@ -201,34 +217,10 @@ public class Settings extends javax.swing.JFrame {
         jLabel8.setText("Current password");
         jLabel8.setIconTextGap(11);
 
-        currentPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        currentPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
-        currentPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                currentPassActionPerformed(evt);
-            }
-        });
-
-        newPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        newPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
-        newPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newPassActionPerformed(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
         jLabel9.setText("New password");
         jLabel9.setIconTextGap(11);
-
-        renewPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        renewPass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 1, new java.awt.Color(0, 51, 153)));
-        renewPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                renewPassActionPerformed(evt);
-            }
-        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
@@ -265,18 +257,31 @@ public class Settings extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel7.setText("First Name");
+        jLabel7.setIconTextGap(11);
+
+        lnError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        lnError.setForeground(new java.awt.Color(240, 240, 240));
+        lnError.setText("  ");
+        lnError.setIconTextGap(11);
+
+        emailError.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        emailError.setForeground(new java.awt.Color(240, 240, 240));
+        emailError.setText("  ");
+        emailError.setIconTextGap(11);
+
+        currentPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        newPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        renewPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout accountSettingLayout = new javax.swing.GroupLayout(accountSetting);
         accountSetting.setLayout(accountSettingLayout);
         accountSettingLayout.setHorizontalGroup(
             accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accountSettingLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(123, 123, 123))
             .addGroup(accountSettingLayout.createSequentialGroup()
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(accountSettingLayout.createSequentialGroup()
@@ -284,74 +289,91 @@ public class Settings extends javax.swing.JFrame {
                         .addComponent(jSeparator1))
                     .addGroup(accountSettingLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(102, 102, 102)
-                        .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lnError, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(accountSettingLayout.createSequentialGroup()
+                                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(fnError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(102, 102, 102)
+                                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(accountSettingLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
             .addGroup(accountSettingLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(renewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(renewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountSettingLayout.createSequentialGroup()
-                        .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(accountSettingLayout.createSequentialGroup()
+                        .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(134, 134, 134))
+                    .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountSettingLayout.createSequentialGroup()
                             .addComponent(jLabel9)
-                            .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(130, 130, 130))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountSettingLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158))))
+                            .addGap(222, 222, 222))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountSettingLayout.createSequentialGroup()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(158, 158, 158)))))
         );
         accountSettingLayout.setVerticalGroup(
             accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(accountSettingLayout.createSequentialGroup()
-                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(accountSettingLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountSettingLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
+                .addGap(51, 51, 51)
+                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fnError)
+                    .addComponent(lnError))
+                .addGap(8, 8, 8)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(accountSettingLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(7, 7, 7)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailError)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(accountSettingLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(accountSettingLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(currentPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(accountSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(accountSettingLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(renewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(renewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         mainSetting.add(accountSetting, "card2");
@@ -455,18 +477,6 @@ public class Settings extends javax.swing.JFrame {
             }
         });
 
-        back.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        back.setForeground(new java.awt.Color(240, 240, 240));
-        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_back_to_32px.png"))); // NOI18N
-        back.setText("Back");
-        back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        back.setIconTextGap(3);
-        back.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -475,8 +485,7 @@ public class Settings extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(toAccount)
-                    .addComponent(toReport)
-                    .addComponent(back))
+                    .addComponent(toReport))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -486,9 +495,7 @@ public class Settings extends javax.swing.JFrame {
                 .addComponent(toAccount)
                 .addGap(18, 18, 18)
                 .addComponent(toReport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(back)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -515,35 +522,18 @@ public class Settings extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    boolean checkEmail = false; 
+    boolean checkFirst = false;
+    boolean checkLast = false;
+    
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fnameActionPerformed
-
-    private void lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lnameActionPerformed
-
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
-
-    private void currentPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_currentPassActionPerformed
-
-    private void newPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newPassActionPerformed
-
-    private void renewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renewPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_renewPassActionPerformed
-
+    
+   
+    
+    
     private void toAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toAccountMouseClicked
         // TODO add your handling code here:
         mainSetting.removeAll();
@@ -570,43 +560,47 @@ public class Settings extends javax.swing.JFrame {
 
     private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
         // TODO add your handling code here:
-       String fn = fname.getText();
-       String ln = lname.getText();
-       String umail = email.getText();
-       
-        try(
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/nakooding","root","");
-            Statement stmt = conn.createStatement();
-        ){
-            String update = "update account set first_name='"+fn+"',last_name='"+ln+
-                    "',username='"+username+"',email='"+umail+","+"',password='"+password+
-                    "' where username = '"+username+"'";
-            stmt.executeUpdate(update);
-            JOptionPane.showMessageDialog(null,"edit data berhasil");
-           
-            fname.setText(null);
-            lname.setText(null);
-            email.setText(null);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"gagal edit data");
-            ex.printStackTrace();
+        String fn = fname.getText();
+        String ln = lname.getText();
+        String umail = email.getText();
+
+        if(checkEmail && checkFirst && checkLast){
+            try(
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/nakooding","root","");
+                Statement stmt = conn.createStatement();
+            ){
+                String update = "update account set first_name='"+fn+"',last_name='"+ln+
+                "',username='"+username+"',email='"+umail+","+"',password='"+password+
+                "' where username = '"+username+"'";
+                stmt.executeUpdate(update);
+                JOptionPane.showMessageDialog(null,"edit data berhasil");
+
+                fname.setText(null);
+                lname.setText(null);
+                email.setText(null);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,"gagal edit data");
+                ex.printStackTrace();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"gagal mengubah profile");
         }
-        
+
     }//GEN-LAST:event_saveMouseClicked
 
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
         // TODO add your handling code here:
-       String curpass = currentPass.getText();
-       String newpass = newPass.getText();
-       String repass = renewPass.getText();
-       
+        String curpass = currentPass.getText();
+        String newpass = newPass.getText();
+        String repass = renewPass.getText();
+
         try(
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/nakooding","root","");
             Statement stmt = conn.createStatement();
         ){
             String update = "update account set first_name='"+firstname+"',last_name='"+lastname+
-                    "',username='"+username+"',email='"+emails+","+"',password='"+newpass+
-                    "' where username = '"+username+"'";
+            "',username='"+username+"',email='"+emails+","+"',password='"+newpass+
+            "' where username = '"+username+"'";
             if(newpass.equals(repass) && curpass.equals(password)){
                 stmt.executeUpdate(update);
                 JOptionPane.showMessageDialog(null,"password telah diganti");
@@ -626,10 +620,75 @@ public class Settings extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_resetMouseClicked
 
-    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
+    private void emailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_backMouseClicked
+        String PATTERN ="[A-za-z]+.*[0-9]*@[A-Za-z]+\\.[A-Za-z]+";
+        if(email.getText().matches(PATTERN)){
+            emailError.setText("");
+            checkEmail = true;
+            if(checkEmail(email.getText())){
+                emailError.setText("Email telah digunakan");
+                checkEmail = false;
+            }else{
+                checkEmail = true;
+                emailError.setText("");
+            }
+        }else{
+            emailError.setText("Email belum valid");
+            checkEmail = false;
+        }
+    }//GEN-LAST:event_emailKeyReleased
 
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailActionPerformed
+
+    private void lnameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lnameKeyReleased
+        // TODO add your handling code here:
+        String PATTERN = "[A-Za-z]+";
+        if(fname.getText().matches(PATTERN)){
+            lnError.setText("");
+            checkLast = true;
+        }else{
+            lnError.setText("Nama tidak valid");
+            checkLast = false;
+        }
+    }//GEN-LAST:event_lnameKeyReleased
+
+    private void fnameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fnameKeyReleased
+        // TODO add your handling code here:
+        String PATTERN = "[A-Za-z]+";
+        if(fname.getText().matches(PATTERN)){
+            fnError.setText("");
+            checkFirst = true;
+        }else{
+            fnError.setText("Nama tidak valid");
+            checkFirst = false;
+        }
+    }//GEN-LAST:event_fnameKeyReleased
+
+    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fnameActionPerformed
+        
+    public boolean checkEmail(String email){ //Cek email kalo udh ada
+         PreparedStatement ps;
+         ResultSet rs; 
+         boolean checkMail = false;
+         String query = "SELECT * FROM account WHERE email =?";
+         try {
+             ps = connectionDB.ConnectDb().prepareStatement(query);
+             ps.setString(1, email);
+             rs = ps.executeQuery(); 
+            if(rs.next()){
+                checkMail = true;
+            }
+         } catch (SQLException ex) {
+             Logger.getLogger(RegisFrame.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         return checkMail;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -667,9 +726,10 @@ public class Settings extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountSetting;
-    private javax.swing.JLabel back;
-    private javax.swing.JTextField currentPass;
+    private javax.swing.JPasswordField currentPass;
     private javax.swing.JTextField email;
+    private javax.swing.JLabel emailError;
+    private javax.swing.JLabel fnError;
     private javax.swing.JTextField fname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -677,9 +737,9 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -690,10 +750,11 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lnError;
     private javax.swing.JTextField lname;
     private javax.swing.JPanel mainSetting;
-    private javax.swing.JTextField newPass;
-    private javax.swing.JTextField renewPass;
+    private javax.swing.JPasswordField newPass;
+    private javax.swing.JPasswordField renewPass;
     private javax.swing.JPanel reportPanel;
     private javax.swing.JLabel reset;
     private javax.swing.JLabel save;
