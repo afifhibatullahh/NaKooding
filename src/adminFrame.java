@@ -647,7 +647,7 @@ public class adminFrame extends javax.swing.JFrame {
             Statement stmt = conn.createStatement();
         ){
             String update = "update account set first_name='"+fn+"',last_name='"+ln+
-                    "',username='"+username.getText()+"',email='"+email.getText()+","+"',password='"+password.getText()+
+                    "',username='"+username.getText()+"',email='"+email.getText()+"',password='"+password.getText()+
                     "' where username = '"+model.getValueAt(table_data.getSelectedRow(), 1).toString()+"'";
             stmt.executeUpdate(update);
             JOptionPane.showMessageDialog(null,"edit data berhasil");

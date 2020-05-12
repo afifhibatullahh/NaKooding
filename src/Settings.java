@@ -570,7 +570,7 @@ public class Settings extends javax.swing.JFrame {
                 Statement stmt = conn.createStatement();
             ){
                 String update = "update account set first_name='"+fn+"',last_name='"+ln+
-                "',username='"+username+"',email='"+umail+","+"',password='"+password+
+                "',username='"+username+"',email='"+umail+"',password='"+password+
                 "' where username = '"+username+"'";
                 stmt.executeUpdate(update);
                 JOptionPane.showMessageDialog(null,"edit data berhasil");
@@ -599,7 +599,7 @@ public class Settings extends javax.swing.JFrame {
             Statement stmt = conn.createStatement();
         ){
             String update = "update account set first_name='"+firstname+"',last_name='"+lastname+
-            "',username='"+username+"',email='"+emails+","+"',password='"+newpass+
+            "',username='"+username+"',email='"+emails+"',password='"+newpass+
             "' where username = '"+username+"'";
             if(newpass.equals(repass) && curpass.equals(password)){
                 stmt.executeUpdate(update);
