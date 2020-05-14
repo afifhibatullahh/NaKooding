@@ -573,17 +573,17 @@ public class Settings extends javax.swing.JFrame {
                 "',username='"+username+"',email='"+umail+"',password='"+password+
                 "' where username = '"+username+"'";
                 stmt.executeUpdate(update);
-                JOptionPane.showMessageDialog(null,"edit data berhasil");
+                JOptionPane.showMessageDialog(null,"Profile telah diperbarui");
 
                 fname.setText(null);
                 lname.setText(null);
                 email.setText(null);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"gagal edit data");
+                JOptionPane.showMessageDialog(null,"Profile tidak diperbarui");
                 ex.printStackTrace();
             }
         }else{
-            JOptionPane.showMessageDialog(null,"gagal mengubah profile");
+            JOptionPane.showMessageDialog(null,"Gagal mengubah profile");
         }
 
     }//GEN-LAST:event_saveMouseClicked
@@ -603,19 +603,19 @@ public class Settings extends javax.swing.JFrame {
             "' where username = '"+username+"'";
             if(newpass.equals(repass) && curpass.equals(password)){
                 stmt.executeUpdate(update);
-                JOptionPane.showMessageDialog(null,"password telah diganti");
+                JOptionPane.showMessageDialog(null,"Password telah diganti");
 
                 currentPass.setText(null);
                 newPass.setText(null);
                 renewPass.setText(null);
             }else{
-                JOptionPane.showMessageDialog(null,"gagal mengganti password");
+                JOptionPane.showMessageDialog(null,"Gagal mengganti password");
                 currentPass.setText(null);
                 newPass.setText(null);
                 renewPass.setText(null);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"gagal edit data");
+            JOptionPane.showMessageDialog(null,"Gagal edit data");
             ex.printStackTrace();
         }
     }//GEN-LAST:event_resetMouseClicked
